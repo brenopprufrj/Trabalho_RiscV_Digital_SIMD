@@ -96,7 +96,7 @@
     \textit{Professor: Diego Leonel Cadete Dutra}\\[2cm]
     
     \textbf{Repositório GitHub:}\\[0.2cm]
-    \url{https://github.com/brenopprufrj/Trabalho_RiscV_Digital_Basic.git}\\[2cm]
+    \url{https://github.com/brenopprufrj/Trabalho_RiscV_Digital_SIMD.git}\\[2cm]
     
     \vfill
     {\large Rio de Janeiro - RJ}\\
@@ -280,67 +280,7 @@ MEM/WB & valu\_result (128), vd\_addr, v\_reg\_write \\
 \end{table}
 
 %=============================================================================
-% 4. DIAGRAMA DA ARQUITETURA
-%=============================================================================
-\section{Diagrama da Arquitetura}
-
-A Figura \ref{fig:arch_vector} apresenta o diagrama da CPU com extensão vetorial:
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale=0.7, every node/.style={scale=0.7}]
-    % Pipeline stages
-    \node[draw, minimum width=1.2cm, minimum height=0.8cm, fill=blue!10] (IF) at (0,0) {IF};
-    \node[draw, minimum width=1.2cm, minimum height=0.8cm, fill=green!10] (ID) at (2.5,0) {ID};
-    \node[draw, minimum width=1.2cm, minimum height=0.8cm, fill=orange!10] (EX) at (5,0) {EX};
-    \node[draw, minimum width=1.2cm, minimum height=0.8cm, fill=red!10] (MEM) at (7.5,0) {MEM};
-    \node[draw, minimum width=1.2cm, minimum height=0.8cm, fill=purple!10] (WB) at (10,0) {WB};
-    
-    % Pipeline registers
-    \node[draw, fill=gray!20, minimum width=0.5cm, minimum height=1.2cm] (IFID) at (1.25,0) {\rotatebox{90}{\tiny IF/ID}};
-    \node[draw, fill=gray!20, minimum width=0.5cm, minimum height=1.2cm] (IDEX) at (3.75,0) {\rotatebox{90}{\tiny ID/EX}};
-    \node[draw, fill=gray!20, minimum width=0.5cm, minimum height=1.2cm] (EXMEM) at (6.25,0) {\rotatebox{90}{\tiny EX/MEM}};
-    \node[draw, fill=gray!20, minimum width=0.5cm, minimum height=1.2cm] (MEMWB) at (8.75,0) {\rotatebox{90}{\tiny MEM/WB}};
-    
-    % Scalar components
-    \node[draw, fill=blue!20, minimum width=1.5cm] (PC) at (0,-2) {\tiny PC};
-    \node[draw, fill=blue!20, minimum width=1.5cm] (IMEM) at (0,-3.5) {\tiny IMEM};
-    \node[draw, fill=green!20, minimum width=1.5cm] (DEC) at (2.5,-2) {\tiny Decoder};
-    \node[draw, fill=green!20, minimum width=1.5cm] (REG) at (2.5,-3.5) {\tiny RegFile};
-    \node[draw, fill=orange!20, minimum width=1.5cm] (ALU) at (5,-2.5) {\tiny ALU};
-    \node[draw, fill=red!20, minimum width=1.5cm] (DMEM) at (7.5,-2.5) {\tiny DMEM};
-    
-    % Vector components (highlighted)
-    \node[draw, fill=cyan!30, minimum width=1.5cm, line width=1pt] (VREG) at (2.5,-5) {\tiny VRegFile};
-    \node[draw, fill=cyan!30, minimum width=1.5cm, line width=1pt] (VALU) at (5,-5) {\tiny VALU};
-    
-    % Labels for vector
-    \node at (2.5,-6) {\tiny (v0-v31)};
-    \node at (5,-6) {\tiny (4 lanes)};
-    
-    % Hazard/Forwarding
-    \node[draw, fill=yellow!30, minimum width=6cm, minimum height=0.5cm] (HF) at (5,-7.5) {\tiny Hazard Unit + Forwarding (Escalar + Vetorial)};
-    
-    % Connections
-    \draw[->] (IF) -- (IFID);
-    \draw[->] (IFID) -- (ID);
-    \draw[->] (ID) -- (IDEX);
-    \draw[->] (IDEX) -- (EX);
-    \draw[->] (EX) -- (EXMEM);
-    \draw[->] (EXMEM) -- (MEM);
-    \draw[->] (MEM) -- (MEMWB);
-    \draw[->] (MEMWB) -- (WB);
-    
-    % Writeback path
-    \draw[->, dashed] (WB.south) -- (10,-4) -- (2.5,-4) -- (REG.east);
-    \draw[->, dashed, cyan] (10,-4.5) -- (2.5,-4.5) -- (VREG.east);
-\end{tikzpicture}
-\caption{Arquitetura RISC-V com Extensão Vetorial}
-\label{fig:arch_vector}
-\end{figure}
-
-%=============================================================================
-% 5. ESTRUTURA DE ARQUIVOS
+% 4. ESTRUTURA DE ARQUIVOS
 %=============================================================================
 \section{Estrutura de Arquivos}
 
@@ -379,7 +319,7 @@ A Figura \ref{fig:arch_vector} apresenta o diagrama da CPU com extensão vetoria
 \end{table}
 
 %=============================================================================
-% 6. INTERFACE DE DEBUG
+% 5. INTERFACE DE DEBUG
 %=============================================================================
 \section{Interface de Debug Vetorial}
 
@@ -405,7 +345,7 @@ Para aferição de estados internos, conforme requisitado, foram adicionados sin
 \textbf{Nota:} As saídas estão divididas em 4 lanes de 32 bits devido à limitação de 64 bits do Splitter do simulador Digital.
 
 %=============================================================================
-% 7. CONCLUSÃO
+% 6. CONCLUSÃO
 %=============================================================================
 \section{Conclusão}
 
