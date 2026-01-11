@@ -15,6 +15,7 @@
 \usepackage{tikz}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{float}
 
 % Configuração de página
 \geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
@@ -75,29 +76,30 @@
     \centering
     \vspace*{2cm}
     
-    {\LARGE \textbf{Universidade Federal do Espírito Santo}}\\[0.5cm]
-    {\Large Centro Tecnológico}\\[0.3cm]
-    {\Large Departamento de Informática}\\[2cm]
+    {\LARGE \textbf{Universidade Federal do Rio de Janeiro}}\\[0.5cm]
+    {\Large Centro de Tecnologia}\\[0.3cm]
+    {\Large Escola Politécnica}\\[2cm]
     
     \rule{\linewidth}{0.5mm}\\[0.4cm]
     {\Huge \textbf{Extensão Vetorial para CPU RISC-V}}\\[0.2cm]
     {\Large RV32I + Instruções SIMD - Relatório Técnico}\\
     \rule{\linewidth}{0.5mm}\\[2cm]
     
-    {\large Disciplina: Arquitetura de Computadores}\\[0.5cm]
-    {\large Professor: [Nome do Professor]}\\[2cm]
-    
     \textbf{Autores:}\\[0.3cm]
-    % Adicione os nomes dos integrantes do trio aqui
-    [Nome do Integrante 1]\\
-    [Nome do Integrante 2]\\
-    [Nome do Integrante 3]\\[2cm]
+    Breno Valente Manhães - DRE: 122038517\\
+    Thomas Cardoso de Miranda - DRE: 122050797\\
+    Murilo Jorge de Figueiredo - DRE: 122079597\\
+    Gabriel Brígido Pinheiro da Silva - DRE: 120056519\\
+    Carlos Bruno Barbosa Correia - DRE: 122039987\\[1cm]
+    
+    \textit{Disciplina: EEL580 - Arquitetura de Computadores}\\
+    \textit{Professor: Diego Leonel Cadete Dutra}\\[2cm]
     
     \textbf{Repositório GitHub:}\\[0.2cm]
     \url{https://github.com/brenopprufrj/Trabalho_RiscV_Digital_Basic.git}\\[2cm]
     
     \vfill
-    {\large Vitória - ES}\\
+    {\large Rio de Janeiro - RJ}\\
     {\large Janeiro de 2026}
 \end{titlepage}
 
@@ -143,7 +145,7 @@ A extensão implementa 8 instruções vetoriais:
 
 \subsection{Registradores Vetoriais}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|l|l|}
 \hline
@@ -161,7 +163,7 @@ Largura & 128 bits (4 lanes × 32 bits) \\
 
 Cada instrução vetorial opera em paralelo sobre 4 elementos de 32 bits, seguindo o modelo SIMD (Single Instruction, Multiple Data):
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|}
 \hline
@@ -185,7 +187,7 @@ Esta abordagem permite executar 4 operações de 32 bits simultaneamente em um �
 
 Utilizamos os opcodes \texttt{custom-0} (\texttt{0x0B}) e \texttt{custom-1} (\texttt{0x2B}) reservados pela especificação RISC-V para extensões personalizadas:
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|l|}
 \hline
@@ -216,7 +218,7 @@ custom-1 & 0101011 & 0x2B & VAUIPC (U-type vetorial) \\
 
 A VALU implementa 4 ALUs paralelas, uma para cada lane. Cada ALU de 32 bits executa independentemente a mesma operação sobre seu elemento correspondente do registrador vetorial.
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|c|c|l|}
 \hline
@@ -263,7 +265,7 @@ Esta escolha elimina bolhas de pipeline quando uma instrução lê um registrado
 
 Adicionamos registradores de pipeline dedicados para dados vetoriais:
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|l|l|}
 \hline
@@ -284,7 +286,7 @@ MEM/WB & valu\_result (128), vd\_addr, v\_reg\_write \\
 
 A Figura \ref{fig:arch_vector} apresenta o diagrama da CPU com extensão vetorial:
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=0.7, every node/.style={scale=0.7}]
     % Pipeline stages
@@ -344,7 +346,7 @@ A Figura \ref{fig:arch_vector} apresenta o diagrama da CPU com extensão vetoria
 
 \subsection{Módulos Vetoriais (Novos)}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|l|l|}
 \hline
@@ -362,7 +364,7 @@ A Figura \ref{fig:arch_vector} apresenta o diagrama da CPU com extensão vetoria
 
 \subsection{Módulos Modificados}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|l|l|}
 \hline
@@ -383,7 +385,7 @@ A Figura \ref{fig:arch_vector} apresenta o diagrama da CPU com extensão vetoria
 
 Para aferição de estados internos, conforme requisitado, foram adicionados sinais de debug específicos para a extensão vetorial:
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|l|c|l|}
 \hline
@@ -448,7 +450,7 @@ Esta seção apresenta a documentação completa de opcodes e instruções vetor
 
 \subsection{Opcodes Vetoriais}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|l|}
 \hline
@@ -466,7 +468,7 @@ custom-1 & 0101011 & 0x2B & VAUIPC (U-type) \\
 
 Formato: \texttt{funct7[6:0] | rs2[4:0] | rs1[4:0] | funct3[2:0] | rd[4:0] | opcode[6:0]}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|l|c|c|c|l|}
 \hline
@@ -486,7 +488,7 @@ vsrl vd, vs1, vs2 & 0000000 & 101 & 0001011 & vd[i] = vs1[i] $\gg$ vs2[i][4:0] \
 
 Formato: \texttt{imm[11:0] | rs1[4:0] | funct3[2:0] | rd[4:0] | opcode[6:0]}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|l|c|c|l|}
 \hline
@@ -507,7 +509,7 @@ vsrli vd, vs1, shamt & 111 & 0001011 & vd[i] = vs1[i] $\gg$ shamt \\
 
 Formato: \texttt{imm[31:12] | rd[4:0] | opcode[6:0]}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|l|c|l|}
 \hline
@@ -522,7 +524,7 @@ vauipc vd, imm & 0101011 & vd[i] = PC + (imm $\ll$ 12) \\
 
 \subsection{Códigos de Controle da VALU}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|c|c|l|l|}
 \hline
